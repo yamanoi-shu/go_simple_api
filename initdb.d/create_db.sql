@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS go_sample_api;
+
+CREATE DATABASE IF NOT EXISTS go_sample_api;

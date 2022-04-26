@@ -6,15 +6,21 @@ import (
 	"go_simple_api/model"
 	"io/ioutil"
 	"net/http"
+
+	"gorm.io/gorm"
 )
 
-type UserController struct{}
-
-func NewUserController() *UserController {
-	return &UserController{}
+type UserController struct {
+	UserModel *model.UserModel
 }
 
-func (*UserController) Create(w http.ResponseWriter, r *http.Request) {
+func NewUserController(db *gorm.DB) *UserController {
+	return &UserController{
+		UserModel: model.NewUserModel(db),
+	}
+}
+
+func (controller *UserController) Create(w http.ResponseWriter, r *http.Request) {
 
 	reqBody := make(map[string]string)
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
@@ -30,7 +36,7 @@ func (*UserController) Create(w http.ResponseWriter, r *http.Request) {
 	}
 	firstName := reqBody["first_name"]
 	lastName := reqBody["last_name"]
-	user, err := model.CreateUser(firstName, lastName)
+	user, err := controller.UserModel.CreateUser(firstName, lastName)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

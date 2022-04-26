@@ -5,15 +5,14 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
-
-func Init() {
+func InitDB() *gorm.DB {
 
 	//dsn := os.Getenv("DB_DSN")
-	dsn := "yamanoi:password@tcp(localhost:3306)/go_sample_api"
+	dsn := "root:password@tcp(db:3306)/go_sample_api"
 	var err error
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+	return db
 }

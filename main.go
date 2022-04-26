@@ -9,13 +9,13 @@ import (
 )
 
 func main() {
-	model.Init()
 	routing()
 }
 
 func routing() {
+	db := model.InitDB()
 	r := mux.NewRouter()
-	userController := controller.NewUserController()
+	userController := controller.NewUserController(db)
 	r.HandleFunc("/create", userController.Create).Methods("POST")
 
 	http.ListenAndServe(":8080", r)
