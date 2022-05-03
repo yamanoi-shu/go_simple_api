@@ -24,4 +24,4 @@ gorrila/mux (https://github.com/gorilla/mux)
 
 ## DATA-DOG/go-sqlmock
 
-## aquasecurity/testdocker
+## ory/dockertest
