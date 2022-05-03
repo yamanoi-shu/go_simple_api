@@ -46,7 +46,10 @@ func NewDBContainer(pool *dockertest.Pool) (*DBContainer, error) {
 		Repository: "mysql",
 		Tag:        "8.0",
 		Env:        []string{"MYSQL_ROOT_PASSWORD=secret"},
-		Mounts:     []string{workDir + "/testdata/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql"},
+		Mounts: []string{
+			workDir + "/testdata/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql",
+			workDir + "/testdata:/testdata",
+		},
 	})
 
 	if err != nil {
@@ -73,6 +76,7 @@ func NewDBContainer(pool *dockertest.Pool) (*DBContainer, error) {
 
 		return sqlDB.Ping()
 	}); err != nil {
+		pool.Purge(resource)
 		return nil, err
 	}
 
