@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetDBMock() (*gorm.DB, sqlmock.Sqlmock, error) {
+func InitDBMock() (*gorm.DB, sqlmock.Sqlmock, error) {
 	mockDB, mock, err := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
 
 	if err != nil {
@@ -47,8 +47,7 @@ func NewDBContainer(pool *dockertest.Pool) (*DBContainer, error) {
 		Tag:        "8.0",
 		Env:        []string{"MYSQL_ROOT_PASSWORD=secret"},
 		Mounts: []string{
-			workDir + "/testdata/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql",
-			workDir + "/testdata:/testdata",
+			workDir + "/testdata:/docker-entrypoint-initdb.d",
 		},
 	})
 

@@ -2,10 +2,8 @@ package model_test
 
 import (
 	"go_simple_api/model"
-	"os"
 	"testing"
 
-	"github.com/ory/dockertest/v3"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,11 +14,8 @@ func TestFindUserByIdDocker(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	//コンテナの起動、DB接続
 	dbContainer, err := model.NewDBContainer(pool)
-
-	dbContainer.Resource.Exec([]string{"ls testdata"}, dockertest.ExecOptions{StdOut: os.Stdout})
-
-	dbContainer.Resource.Exec([]string{"mysql", "-uroot", "-psecret", "test_db", "-e\"$(cat /testdata/insert_data.sql)\""}, dockertest.ExecOptions{StdOut: os.Stdout})
 
 	if err != nil {
 		pool.Purge(dbContainer.Resource)
@@ -35,7 +30,7 @@ func TestFindUserByIdDocker(t *testing.T) {
 		LastName:  "Jordan",
 	}
 
-	user, err := userModel.FindUserById(1)
+	user, err := userModel.FindById(1)
 
 	if err != nil {
 		pool.Purge(dbContainer.Resource)

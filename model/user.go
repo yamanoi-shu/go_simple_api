@@ -25,7 +25,7 @@ func (m *UserModel) CreateUser(firstName, lastName string) (user User, err error
 	return
 }
 
-func (m *UserModel) FindUserById(id int) (user User, err error) {
+func (m *UserModel) FindById(id int) (user User, err error) {
 	err = m.db.Find(&user, id).Error
 	return
 }
