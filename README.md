@@ -2,6 +2,11 @@
 
 Created for Tech Blog
 
+Sample project.
+
+- Sample testing using mocking (go-sqlmock)
+- Sample testing using Docker container (dockertest)
+
 # Domain
 
 ## User
